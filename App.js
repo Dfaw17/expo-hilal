@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { NavigationContainer } from '@react-navigation/native'
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import daftar from "./screen/Daftar";
+import Masuk from "./screen/Masuk";
+import PilihOutlet from "./screen/PilihOutlet";
+import loadingBar from "./screen/loadingBar";
+import onBoarding from "./screen/onBoarding";
+import Beranda from "./screen/Beranda";
+import Google from "./screen/Google";
+import Whatsapp from "./screen/Whatsapp";
 
-export default function App() {
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+
+function Root() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Drawer.Navigator>
+      <Drawer.Screen name="Beranda" component={Beranda}/>
+    </Drawer.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="onBoarding">
+        <Stack.Screen name="Root" component={Root} options={{ headerShown: false }}/>
+        <Stack.Screen name="onBoarding" component={onBoarding} options={{ headerShown: false }}/>
+        <Stack.Screen name="Daftar" component={daftar} />
+        <Stack.Screen name="Masuk" component={Masuk} />
+        <Stack.Screen name="Pilih Outlet" component={PilihOutlet} />
+        <Stack.Screen name="LoadingBar" component={loadingBar} options={{ headerShown: false }}/>
+        <Stack.Screen name="Masuk dengan email" component={Google} />
+        <Stack.Screen name="Masuk dengan WA" component={Whatsapp} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
